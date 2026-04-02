@@ -1,40 +1,26 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
-public class TrainConsistManagementApp {
+public class TrainConsistMgmt {
 
     public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("=== Train Consist Management App ===");
+        System.out.println("UC3 Track Unique Bogie IDs");
 
-        // Initialize passenger bogie list
-        List<String> passengerBogies = new ArrayList<>();
+        HashSet<String> bogieIds = new HashSet<>();
 
-        System.out.println("Train consist initialized.");
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
+        bogieIds.add("BG103");
+        bogieIds.add("BG101");
+        bogieIds.add("BG104");
+        bogieIds.add("BG102");
 
-        // Add passenger bogies
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+        System.out.println("Bogie IDs After Insertion:");
+        System.out.println(bogieIds);
 
-        // Display bogies after addition
-        System.out.println("\nPassenger Bogies after addition:");
-        System.out.println(passengerBogies);
+        System.out.println("Note:");
+        System.out.println("Duplicates are automatically ignored by HashSet.");
 
-        // Remove a bogie (AC Chair)
-        passengerBogies.remove("AC Chair");
-
-        // Display after removal
-        System.out.println("\nAfter removing AC Chair:");
-        System.out.println(passengerBogies);
-
-        // Check if Sleeper exists
-        boolean exists = passengerBogies.contains("Sleeper");
-        System.out.println("\nIs Sleeper present? " + exists);
-
-        // Final state
-        System.out.println("\nFinal Passenger Bogies:");
-        System.out.println(passengerBogies);
+        System.out.println("UC3 uniqueness validation completed...");
     }
 }

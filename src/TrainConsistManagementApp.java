@@ -1,40 +1,52 @@
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import org.junit.jupiter.api.Test;
+import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TrainConsistManagementApp {
+class TrainConsistManagementAppTest {
 
-    private static final String TRAIN_REGEX = "TRN-\\d{4}";
-    private static final String CARGO_REGEX = "PET-[A-Z]{2}";
+    @Test
+    void testSafety_AllBogiesValid() {
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum"),
+                new TrainConsistManagementApp.GoodsBogie("Open", "Coal")
+        );
 
-    public static boolean isValidTrainID(String trainId) {
-        return Pattern.matches(TRAIN_REGEX, trainId);
+        assertTrue(TrainConsistManagementApp.isTrainSafe(bogies));
     }
 
-    public static boolean isValidCargoCode(String cargoCode) {
-        return Pattern.matches(CARGO_REGEX, cargoCode);
+    @Test
+    void testSafety_CylindricalWithInvalidCargo() {
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Coal")
+        );
+
+        assertFalse(TrainConsistManagementApp.isTrainSafe(bogies));
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    @Test
+    void testSafety_NonCylindricalBogiesAllowed() {
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Open", "Coal"),
+                new TrainConsistManagementApp.GoodsBogie("Box", "Grain")
+        );
 
-        System.out.print("Enter Train ID: ");
-        String trainId = sc.nextLine();
+        assertTrue(TrainConsistManagementApp.isTrainSafe(bogies));
+    }
 
-        System.out.print("Enter Cargo Code: ");
-        String cargoCode = sc.nextLine();
+    @Test
+    void testSafety_MixedBogiesWithViolation() {
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum"),
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Coal")
+        );
 
-        if (isValidTrainID(trainId)) {
-            System.out.println("Valid Train ID");
-        } else {
-            System.out.println("Invalid Train ID");
-        }
+        assertFalse(TrainConsistManagementApp.isTrainSafe(bogies));
+    }
 
-        if (isValidCargoCode(cargoCode)) {
-            System.out.println("Valid Cargo Code");
-        } else {
-            System.out.println("Invalid Cargo Code");
-        }
+    @Test
+    void testSafety_EmptyBogieList() {
+        List<TrainConsistManagementApp.GoodsBogie> bogies = new ArrayList<>();
 
-        sc.close();
+        assertTrue(TrainConsistManagementApp.isTrainSafe(bogies));
     }
 }

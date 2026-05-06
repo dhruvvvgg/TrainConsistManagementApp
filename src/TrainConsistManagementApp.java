@@ -1,89 +1,72 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
-    // Inner class
-    static class GoodsBogie {
-        String type;
-        String cargo;
+    // Custom Exception
+    static class InvalidCapacityException extends Exception {
 
-        public GoodsBogie(String type, String cargo) {
-            this.type = type;
-            this.cargo = cargo;
+        public InvalidCapacityException(String message) {
+            super(message);
+        }
+    }
+
+    // Passenger Bogie Class
+    static class PassengerBogie {
+
+        private String bogieName;
+        private int capacity;
+
+        public PassengerBogie(String bogieName, int capacity)
+                throws InvalidCapacityException {
+
+            if (capacity <= 0) {
+                throw new InvalidCapacityException(
+                        "Capacity must be greater than zero"
+                );
+            }
+
+            this.bogieName = bogieName;
+            this.capacity = capacity;
         }
 
-        public String getType() {
-            return type;
+        public String getBogieName() {
+            return bogieName;
         }
 
-        public String getCargo() {
-            return cargo;
+        public int getCapacity() {
+            return capacity;
         }
 
         @Override
         public String toString() {
-            return type + " - " + cargo;
+            return bogieName + " Capacity: " + capacity;
         }
-    }
-
-    // Loop-based filtering
-    public static List<GoodsBogie> filterUsingLoop(List<GoodsBogie> bogies) {
-        List<GoodsBogie> filtered = new ArrayList<>();
-
-        for (GoodsBogie bogie : bogies) {
-            if (bogie.getCargo().equalsIgnoreCase("Petroleum")) {
-                filtered.add(bogie);
-            }
-        }
-
-        return filtered;
-    }
-
-    // Stream-based filtering
-    public static List<GoodsBogie> filterUsingStream(List<GoodsBogie> bogies) {
-        return bogies.stream()
-                .filter(bogie -> bogie.getCargo().equalsIgnoreCase("Petroleum"))
-                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
 
-        List<GoodsBogie> bogies = new ArrayList<>();
+        List<PassengerBogie> train = new ArrayList<>();
 
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        bogies.add(new GoodsBogie("Open", "Coal"));
-        bogies.add(new GoodsBogie("Box", "Grain"));
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        try {
 
-        // Loop benchmarking
-        long loopStart = System.nanoTime();
+            PassengerBogie bogie1 =
+                    new PassengerBogie("Passenger Coach A", 80);
 
-        List<GoodsBogie> loopResult = filterUsingLoop(bogies);
+            PassengerBogie bogie2 =
+                    new PassengerBogie("Passenger Coach B", -10);
 
-        long loopEnd = System.nanoTime();
+            train.add(bogie1);
+            train.add(bogie2);
 
-        long loopTime = loopEnd - loopStart;
+        } catch (InvalidCapacityException e) {
 
-        // Stream benchmarking
-        long streamStart = System.nanoTime();
+            System.out.println("Exception Caught: " + e.getMessage());
+        }
 
-        List<GoodsBogie> streamResult = filterUsingStream(bogies);
+        System.out.println("Valid Bogies in Train:");
 
-        long streamEnd = System.nanoTime();
-
-        long streamTime = streamEnd - streamStart;
-
-        System.out.println("Loop Filter Result:");
-        System.out.println(loopResult);
-
-        System.out.println("Loop Execution Time: " + loopTime + " ns");
-
-        System.out.println();
-
-        System.out.println("Stream Filter Result:");
-        System.out.println(streamResult);
-
-        System.out.println("Stream Execution Time: " + streamTime + " ns");
+        for (PassengerBogie bogie : train) {
+            System.out.println(bogie);
+        }
     }
 }

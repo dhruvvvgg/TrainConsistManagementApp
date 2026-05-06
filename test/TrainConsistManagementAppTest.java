@@ -1,20 +1,24 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
     @Test
-    void testSearchExistingBogieID() {
+    void testBinarySearchExistingID() {
 
         String[] bogieIds = {
+                "BG309",
                 "BG101",
-                "BG205",
-                "BG309"
+                "BG205"
         };
 
+        Arrays.sort(bogieIds);
+
         boolean result =
-                TrainConsistManagementApp.linearSearch(
+                TrainConsistManagementApp.binarySearch(
                         bogieIds,
                         "BG205"
                 );
@@ -23,7 +27,7 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testSearchNonExistingBogieID() {
+    void testBinarySearchNonExistingID() {
 
         String[] bogieIds = {
                 "BG101",
@@ -31,8 +35,10 @@ class TrainConsistManagementAppTest {
                 "BG309"
         };
 
+        Arrays.sort(bogieIds);
+
         boolean result =
-                TrainConsistManagementApp.linearSearch(
+                TrainConsistManagementApp.binarySearch(
                         bogieIds,
                         "BG999"
                 );
@@ -41,7 +47,7 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testSearchFirstElement() {
+    void testBinarySearchFirstElement() {
 
         String[] bogieIds = {
                 "BG101",
@@ -49,8 +55,10 @@ class TrainConsistManagementAppTest {
                 "BG309"
         };
 
+        Arrays.sort(bogieIds);
+
         boolean result =
-                TrainConsistManagementApp.linearSearch(
+                TrainConsistManagementApp.binarySearch(
                         bogieIds,
                         "BG101"
                 );
@@ -59,7 +67,7 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testSearchLastElement() {
+    void testBinarySearchLastElement() {
 
         String[] bogieIds = {
                 "BG101",
@@ -67,8 +75,10 @@ class TrainConsistManagementAppTest {
                 "BG309"
         };
 
+        Arrays.sort(bogieIds);
+
         boolean result =
-                TrainConsistManagementApp.linearSearch(
+                TrainConsistManagementApp.binarySearch(
                         bogieIds,
                         "BG309"
                 );
@@ -77,12 +87,12 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testSearchEmptyArray() {
+    void testBinarySearchEmptyArray() {
 
         String[] bogieIds = {};
 
         boolean result =
-                TrainConsistManagementApp.linearSearch(
+                TrainConsistManagementApp.binarySearch(
                         bogieIds,
                         "BG101"
                 );

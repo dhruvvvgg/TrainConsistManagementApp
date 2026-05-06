@@ -5,61 +5,62 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainConsistManagementAppTest {
 
     @Test
-    void testSafeCargoAssignment() {
+    void testBubbleSortNormalCase() {
 
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie(
-                        "Cylindrical"
-                );
+        int[] capacities = {80, 40, 100, 60, 20};
 
-        bogie.assignCargo("Petroleum");
+        TrainConsistManagementApp.bubbleSort(capacities);
 
-        assertEquals("Petroleum", bogie.getCargo());
+        int[] expected = {20, 40, 60, 80, 100};
+
+        assertArrayEquals(expected, capacities);
     }
 
     @Test
-    void testUnsafeCargoAssignment() {
+    void testBubbleSortAlreadySorted() {
 
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie(
-                        "Rectangular"
-                );
+        int[] capacities = {10, 20, 30, 40};
 
-        bogie.assignCargo("Petroleum");
+        TrainConsistManagementApp.bubbleSort(capacities);
 
-        assertNull(bogie.getCargo());
+        int[] expected = {10, 20, 30, 40};
+
+        assertArrayEquals(expected, capacities);
     }
 
     @Test
-    void testNonPetroleumCargoAllowed() {
+    void testBubbleSortReverseOrder() {
 
-        TrainConsistManagementApp.GoodsBogie bogie =
-                new TrainConsistManagementApp.GoodsBogie(
-                        "Rectangular"
-                );
+        int[] capacities = {50, 40, 30, 20, 10};
 
-        bogie.assignCargo("Coal");
+        TrainConsistManagementApp.bubbleSort(capacities);
 
-        assertEquals("Coal", bogie.getCargo());
+        int[] expected = {10, 20, 30, 40, 50};
+
+        assertArrayEquals(expected, capacities);
     }
 
     @Test
-    void testApplicationContinuesAfterException() {
+    void testBubbleSortSingleElement() {
 
-        TrainConsistManagementApp.GoodsBogie bogie1 =
-                new TrainConsistManagementApp.GoodsBogie(
-                        "Rectangular"
-                );
+        int[] capacities = {25};
 
-        TrainConsistManagementApp.GoodsBogie bogie2 =
-                new TrainConsistManagementApp.GoodsBogie(
-                        "Cylindrical"
-                );
+        TrainConsistManagementApp.bubbleSort(capacities);
 
-        bogie1.assignCargo("Petroleum");
+        int[] expected = {25};
 
-        bogie2.assignCargo("Petroleum");
+        assertArrayEquals(expected, capacities);
+    }
 
-        assertEquals("Petroleum", bogie2.getCargo());
+    @Test
+    void testBubbleSortEmptyArray() {
+
+        int[] capacities = {};
+
+        TrainConsistManagementApp.bubbleSort(capacities);
+
+        int[] expected = {};
+
+        assertArrayEquals(expected, capacities);
     }
 }

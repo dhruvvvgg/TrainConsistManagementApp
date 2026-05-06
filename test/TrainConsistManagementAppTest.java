@@ -1,24 +1,22 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
     @Test
-    void testBinarySearchExistingID() {
+    void testSearchExistingBogie() {
 
-        String[] bogieIds = {
-                "BG309",
-                "BG101",
-                "BG205"
-        };
+        List<String> bogieIds = new ArrayList<>();
 
-        Arrays.sort(bogieIds);
+        bogieIds.add("BG101");
+        bogieIds.add("BG205");
 
         boolean result =
-                TrainConsistManagementApp.binarySearch(
+                TrainConsistManagementApp.searchBogie(
                         bogieIds,
                         "BG205"
                 );
@@ -27,18 +25,15 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testBinarySearchNonExistingID() {
+    void testSearchNonExistingBogie() {
 
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309"
-        };
+        List<String> bogieIds = new ArrayList<>();
 
-        Arrays.sort(bogieIds);
+        bogieIds.add("BG101");
+        bogieIds.add("BG205");
 
         boolean result =
-                TrainConsistManagementApp.binarySearch(
+                TrainConsistManagementApp.searchBogie(
                         bogieIds,
                         "BG999"
                 );
@@ -47,56 +42,58 @@ class TrainConsistManagementAppTest {
     }
 
     @Test
-    void testBinarySearchFirstElement() {
+    void testSearchEmptyTrain() {
 
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309"
-        };
+        List<String> bogieIds = new ArrayList<>();
 
-        Arrays.sort(bogieIds);
+        Exception exception = assertThrows(
+                IllegalStateException.class,
+                () -> {
+                    TrainConsistManagementApp.searchBogie(
+                            bogieIds,
+                            "BG101"
+                    );
+                }
+        );
+
+        assertEquals(
+                "Cannot perform search. Train has no bogies.",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void testSearchSingleElement() {
+
+        List<String> bogieIds = new ArrayList<>();
+
+        bogieIds.add("BG500");
 
         boolean result =
-                TrainConsistManagementApp.binarySearch(
+                TrainConsistManagementApp.searchBogie(
                         bogieIds,
-                        "BG101"
+                        "BG500"
                 );
 
         assertTrue(result);
     }
 
     @Test
-    void testBinarySearchLastElement() {
+    void testSearchWithMultipleBogies() {
 
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309"
-        };
+        List<String> bogieIds = new ArrayList<>();
 
-        Arrays.sort(bogieIds);
+        bogieIds.add("BG101");
+        bogieIds.add("BG205");
+        bogieIds.add("BG309");
+        bogieIds.add("BG450");
 
         boolean result =
-                TrainConsistManagementApp.binarySearch(
+                TrainConsistManagementApp.searchBogie(
                         bogieIds,
-                        "BG309"
+                        "BG450"
                 );
 
         assertTrue(result);
-    }
-
-    @Test
-    void testBinarySearchEmptyArray() {
-
-        String[] bogieIds = {};
-
-        boolean result =
-                TrainConsistManagementApp.binarySearch(
-                        bogieIds,
-                        "BG101"
-                );
-
-        assertFalse(result);
     }
 }

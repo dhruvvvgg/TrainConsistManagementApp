@@ -5,92 +5,88 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainConsistManagementAppTest {
 
     @Test
-    void testSortBogieTypesNormalCase() {
+    void testSearchExistingBogieID() {
 
-        String[] bogieTypes = {
-                "Cylindrical",
-                "Open",
-                "Box"
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309"
         };
 
-        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
+        boolean result =
+                TrainConsistManagementApp.linearSearch(
+                        bogieIds,
+                        "BG205"
+                );
 
-        String[] expected = {
-                "Box",
-                "Cylindrical",
-                "Open"
-        };
-
-        assertArrayEquals(expected, bogieTypes);
+        assertTrue(result);
     }
 
     @Test
-    void testSortAlreadySortedArray() {
+    void testSearchNonExistingBogieID() {
 
-        String[] bogieTypes = {
-                "Box",
-                "Cylindrical",
-                "Open"
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309"
         };
 
-        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
+        boolean result =
+                TrainConsistManagementApp.linearSearch(
+                        bogieIds,
+                        "BG999"
+                );
 
-        String[] expected = {
-                "Box",
-                "Cylindrical",
-                "Open"
-        };
-
-        assertArrayEquals(expected, bogieTypes);
+        assertFalse(result);
     }
 
     @Test
-    void testSortSingleElement() {
+    void testSearchFirstElement() {
 
-        String[] bogieTypes = {
-                "Tank"
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309"
         };
 
-        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
+        boolean result =
+                TrainConsistManagementApp.linearSearch(
+                        bogieIds,
+                        "BG101"
+                );
 
-        String[] expected = {
-                "Tank"
-        };
-
-        assertArrayEquals(expected, bogieTypes);
+        assertTrue(result);
     }
 
     @Test
-    void testSortEmptyArray() {
+    void testSearchLastElement() {
 
-        String[] bogieTypes = {};
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309"
+        };
 
-        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
+        boolean result =
+                TrainConsistManagementApp.linearSearch(
+                        bogieIds,
+                        "BG309"
+                );
 
-        String[] expected = {};
-
-        assertArrayEquals(expected, bogieTypes);
+        assertTrue(result);
     }
 
     @Test
-    void testSortMixedNames() {
+    void testSearchEmptyArray() {
 
-        String[] bogieTypes = {
-                "Flat",
-                "Box",
-                "Tank",
-                "Open"
-        };
+        String[] bogieIds = {};
 
-        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
+        boolean result =
+                TrainConsistManagementApp.linearSearch(
+                        bogieIds,
+                        "BG101"
+                );
 
-        String[] expected = {
-                "Box",
-                "Flat",
-                "Open",
-                "Tank"
-        };
-
-        assertArrayEquals(expected, bogieTypes);
+        assertFalse(result);
     }
 }

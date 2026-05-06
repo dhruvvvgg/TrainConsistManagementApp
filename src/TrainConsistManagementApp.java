@@ -1,29 +1,43 @@
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class TrainConsistManagementApp {
 
-    // Sorting Method
-    public static void sortBogieTypes(String[] bogieTypes) {
+    // Linear Search Method
+    public static boolean linearSearch(String[] bogieIds, String searchKey) {
 
-        Arrays.sort(bogieTypes);
+        for (String id : bogieIds) {
+
+            if (id.equals(searchKey)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
 
-        String[] bogieTypes = {
-                "Cylindrical",
-                "Open",
-                "Box",
-                "Flat",
-                "Tank"
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG450",
+                "BG512"
         };
 
-        System.out.println("Original Bogie Types:");
-        System.out.println(Arrays.toString(bogieTypes));
+        Scanner sc = new Scanner(System.in);
 
-        sortBogieTypes(bogieTypes);
+        System.out.print("Enter Bogie ID to Search: ");
+        String searchKey = sc.nextLine();
 
-        System.out.println("Sorted Bogie Types:");
-        System.out.println(Arrays.toString(bogieTypes));
+        boolean found = linearSearch(bogieIds, searchKey);
+
+        if (found) {
+            System.out.println("Bogie ID Found");
+        } else {
+            System.out.println("Bogie ID Not Found");
+        }
+
+        sc.close();
     }
 }

@@ -1,35 +1,69 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
     @Test
-    void testValidTrainID() {
-        assertTrue(TrainConsistManagementApp.isValidTrainID("TRN-1234"));
+    void testLoopFiltering() {
+
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum"),
+                new TrainConsistManagementApp.GoodsBogie("Open", "Coal"),
+                new TrainConsistManagementApp.GoodsBogie("Box", "Grain")
+        );
+
+        List<TrainConsistManagementApp.GoodsBogie> result =
+                TrainConsistManagementApp.filterUsingLoop(bogies);
+
+        assertEquals(1, result.size());
+        assertEquals("Petroleum", result.get(0).getCargo());
     }
 
     @Test
-    void testInvalidTrainID() {
-        assertFalse(TrainConsistManagementApp.isValidTrainID("TRN1234"));
-        assertFalse(TrainConsistManagementApp.isValidTrainID("TRN-12"));
-        assertFalse(TrainConsistManagementApp.isValidTrainID("ABC-1234"));
+    void testStreamFiltering() {
+
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum"),
+                new TrainConsistManagementApp.GoodsBogie("Open", "Coal"),
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum")
+        );
+
+        List<TrainConsistManagementApp.GoodsBogie> result =
+                TrainConsistManagementApp.filterUsingStream(bogies);
+
+        assertEquals(2, result.size());
     }
 
     @Test
-    void testValidCargoCode() {
-        assertTrue(TrainConsistManagementApp.isValidCargoCode("PET-AB"));
+    void testEmptyCollection() {
+
+        List<TrainConsistManagementApp.GoodsBogie> bogies =
+                new ArrayList<>();
+
+        List<TrainConsistManagementApp.GoodsBogie> result =
+                TrainConsistManagementApp.filterUsingLoop(bogies);
+
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    void testInvalidCargoCode() {
-        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET-ab"));
-        assertFalse(TrainConsistManagementApp.isValidCargoCode("PET123"));
-        assertFalse(TrainConsistManagementApp.isValidCargoCode("AB-PET"));
-    }
+    void testExecutionTimeMeasurement() {
 
-    @Test
-    void testEmptyInput() {
-        assertFalse(TrainConsistManagementApp.isValidTrainID(""));
-        assertFalse(TrainConsistManagementApp.isValidCargoCode(""));
+        List<TrainConsistManagementApp.GoodsBogie> bogies = Arrays.asList(
+                new TrainConsistManagementApp.GoodsBogie("Cylindrical", "Petroleum")
+        );
+
+        long start = System.nanoTime();
+
+        TrainConsistManagementApp.filterUsingStream(bogies);
+
+        long end = System.nanoTime();
+
+        long executionTime = end - start;
+
+        assertTrue(executionTime > 0);
     }
 }

@@ -5,62 +5,92 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainConsistManagementAppTest {
 
     @Test
-    void testBubbleSortNormalCase() {
+    void testSortBogieTypesNormalCase() {
 
-        int[] capacities = {80, 40, 100, 60, 20};
+        String[] bogieTypes = {
+                "Cylindrical",
+                "Open",
+                "Box"
+        };
 
-        TrainConsistManagementApp.bubbleSort(capacities);
+        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
 
-        int[] expected = {20, 40, 60, 80, 100};
+        String[] expected = {
+                "Box",
+                "Cylindrical",
+                "Open"
+        };
 
-        assertArrayEquals(expected, capacities);
+        assertArrayEquals(expected, bogieTypes);
     }
 
     @Test
-    void testBubbleSortAlreadySorted() {
+    void testSortAlreadySortedArray() {
 
-        int[] capacities = {10, 20, 30, 40};
+        String[] bogieTypes = {
+                "Box",
+                "Cylindrical",
+                "Open"
+        };
 
-        TrainConsistManagementApp.bubbleSort(capacities);
+        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
 
-        int[] expected = {10, 20, 30, 40};
+        String[] expected = {
+                "Box",
+                "Cylindrical",
+                "Open"
+        };
 
-        assertArrayEquals(expected, capacities);
+        assertArrayEquals(expected, bogieTypes);
     }
 
     @Test
-    void testBubbleSortReverseOrder() {
+    void testSortSingleElement() {
 
-        int[] capacities = {50, 40, 30, 20, 10};
+        String[] bogieTypes = {
+                "Tank"
+        };
 
-        TrainConsistManagementApp.bubbleSort(capacities);
+        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
 
-        int[] expected = {10, 20, 30, 40, 50};
+        String[] expected = {
+                "Tank"
+        };
 
-        assertArrayEquals(expected, capacities);
+        assertArrayEquals(expected, bogieTypes);
     }
 
     @Test
-    void testBubbleSortSingleElement() {
+    void testSortEmptyArray() {
 
-        int[] capacities = {25};
+        String[] bogieTypes = {};
 
-        TrainConsistManagementApp.bubbleSort(capacities);
+        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
 
-        int[] expected = {25};
+        String[] expected = {};
 
-        assertArrayEquals(expected, capacities);
+        assertArrayEquals(expected, bogieTypes);
     }
 
     @Test
-    void testBubbleSortEmptyArray() {
+    void testSortMixedNames() {
 
-        int[] capacities = {};
+        String[] bogieTypes = {
+                "Flat",
+                "Box",
+                "Tank",
+                "Open"
+        };
 
-        TrainConsistManagementApp.bubbleSort(capacities);
+        TrainConsistManagementApp.sortBogieTypes(bogieTypes);
 
-        int[] expected = {};
+        String[] expected = {
+                "Box",
+                "Flat",
+                "Open",
+                "Tank"
+        };
 
-        assertArrayEquals(expected, capacities);
+        assertArrayEquals(expected, bogieTypes);
     }
 }
